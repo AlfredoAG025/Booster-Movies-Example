@@ -14,11 +14,22 @@ public class Mvnprojectexample {
 
 		//Testing
         printSelect();
-        printSelectMultiperfil();
-        printSelectCliente();
-        ClaseEntityEjemplo ex = new ClaseEntityEjemplo(1, "nombre","value");
+        deletePerson();
+        printSelect();
         
         
+    }
+
+    static void deletePerson(){
+        PersonaRepository p = new PersonaRepository();
+        int rows_affected = p.deletePersona(3);
+        System.out.println(rows_affected);
+    }
+
+    static void printSelectActors(){
+        PersonaRepository p = new PersonaRepository();
+        List<Map<String, Object>> resSql = p.getActors();
+        System.out.println(resSql);
     }
     
     static void printSelect(){

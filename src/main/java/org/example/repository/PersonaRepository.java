@@ -50,12 +50,42 @@ public class PersonaRepository {
         }
         return result;
     }
+
+    public int deletePersona(int id){
+        int rows_affected = 0;
+        try {
+            Statement st = con.createStatement();
+            rows_affected = st.executeUpdate("DELETE FROM blockbuster.persona WHERE id = ".concat("" + id));
+            closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rows_affected;
+    }
     
     public List<Map<String, Object>> getPersonas(){
         List<Map<String, Object>> result = new ArrayList<>();
         try {
             Statement st = conDB.createConnection().createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM blockbuster.persona");
+            while(rs.next()){
+                Map<String, Object> resultRow = new HashMap<>();
+                resultRow.put("id", rs.getInt(1));
+                resultRow.put("nombre", rs.getString(2));
+                result.add(resultRow);
+            }
+            closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    public List<Map<String, Object>> getActors(){
+        List<Map<String, Object>> result = new ArrayList<>();
+        try {
+            Statement st = conDB.createConnection().createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM blockbuster.persona where tipo = 1");
             while(rs.next()){
                 Map<String, Object> resultRow = new HashMap<>();
                 resultRow.put("id", rs.getInt(1));
