@@ -3,10 +3,7 @@ package org.example.repository;
 import org.example.model.PersonaCliente;
 import org.example.model.PersonaMultiPerfil;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +53,37 @@ public class PersonaRepository {
         try {
             Statement st = con.createStatement();
             rows_affected = st.executeUpdate("DELETE FROM blockbuster.persona WHERE id = ".concat("" + id));
+            closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rows_affected;
+    }
+
+    public int insertPersona(String nombre, int tipo){
+        int rows_affected = 0;
+        try {
+            String sql = "INSERT INTO blockbuster.persona (nombre, tipo) VALUES (?, ?)";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, nombre);
+            pst.setInt(2, tipo);
+            rows_affected = pst.executeUpdate();
+            closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rows_affected;
+    }
+
+    public int updatePersona(String nombre, int tipo, int id_persona){
+        int rows_affected = 0;
+        try {
+            String sql = "UPDATE blockbuster.persona SET nombre = ?, tipo = ? WHERE id = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, nombre);
+            pst.setInt(2, tipo);
+            pst.setInt(3, id_persona);
+            rows_affected = pst.executeUpdate();
             closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(PersonaRepository.class.getName()).log(Level.SEVERE, null, ex);

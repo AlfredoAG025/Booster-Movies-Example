@@ -14,15 +14,27 @@ public class Mvnprojectexample {
 
 		//Testing
         printSelect();
-        deletePerson();
+        UpdatePersona();
         printSelect();
         
         
     }
 
-    static void deletePerson(){
+    static void deletePersona(){
         PersonaRepository p = new PersonaRepository();
         int rows_affected = p.deletePersona(3);
+        System.out.println(rows_affected);
+    }
+
+    static void insertPersona(){
+        PersonaRepository p = new PersonaRepository();
+        int rows_affected = p.insertPersona("Jesus", 2);
+        System.out.println(rows_affected);
+    }
+
+    static void UpdatePersona(){
+        PersonaRepository p = new PersonaRepository();
+        int rows_affected = p.updatePersona("Mariano", 2, 4);
         System.out.println(rows_affected);
     }
 
